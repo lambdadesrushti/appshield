@@ -1,6 +1,6 @@
 """
 AppShield - Enterprise Technical Security Platform
-Senior UI/UX Redesign: High-Signal, Precision Cybersecurity Aesthetic.
+Restored Sidebar, Navigation Tabs, and Technical Blue Theme.
 """
 
 import streamlit as st
@@ -10,20 +10,19 @@ import altair as alt
 import time
 
 st.set_page_config(
-    page_title="AppShield,
+    page_title="AppShield | Security Console",
     page_icon="🛡️",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # =====================================================================
-# ENTERPRISE CSS: NATIVE LIGHT/DARK MODE DUAL THEME
+# ENTERPRISE CSS: NATIVE LIGHT/DARK MODE DUAL THEME & RED OVERRIDE
 # =====================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-/* Dynamic Theme Variables */
 :root {
     --bg-main: #F8FAFC;
     --bg-surface: #FFFFFF;
@@ -33,9 +32,7 @@ st.markdown("""
     --text-secondary: #64748B;
     --text-muted: #94A3B8;
     
-    --brand-navy: #1E3A8A;
     --brand-blue: #2563EB;
-    --brand-cyan: #0EA5E9;
     
     --status-safe-bg: #F0FDF4;
     --status-safe-border: #86EFAC;
@@ -58,9 +55,7 @@ st.markdown("""
         --text-secondary: #94A3B8;
         --text-muted: #475569;
         
-        --brand-navy: #3B82F6;
         --brand-blue: #3B82F6;
-        --brand-cyan: #38BDF8;
         
         --status-safe-bg: rgba(22, 101, 52, 0.2);
         --status-safe-border: #14532D;
@@ -80,19 +75,46 @@ html, body, [class*="css"] {
     color: var(--text-primary) !important;
 }
 
-/* Nuke Default Streamlit UI */
+/* Nuke Default Streamlit Top UI */
 header[data-testid="stHeader"] { display: none !important; }
 footer { display: none !important; }
 .stDeployButton { display: none !important; }
-div[data-testid="stSidebar"] { display: none !important; }
 
+/* ---------------------------------------------------- */
+/* KILL THE RED: Override Multi-Select Tags to Technical Blue */
+/* ---------------------------------------------------- */
+span[data-baseweb="tag"], div[data-baseweb="tag"] {
+    background-color: var(--brand-blue) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+}
+/* Ensure X close icons on tags are white */
+span[data-baseweb="tag"] svg, div[data-baseweb="tag"] svg {
+    fill: #FFFFFF !important;
+}
+/* Multi-select box background */
+div[data-baseweb="select"] > div {
+    background-color: var(--bg-surface) !important; 
+    border-color: var(--border-color) !important;
+}
+
+/* Layout Padding */
 div[data-testid="stAppViewContainer"] > .main > div {
     padding: 2rem 4rem !important;
     max-width: 1400px !important;
 }
 
+/* Sidebar Overrides */
+div[data-testid="stSidebar"] {
+    background-color: var(--bg-surface) !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
 /* Typography Hierarchy */
-.text-mono { font-family: 'JetBrains Mono', monospace; }
 .section-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -129,10 +151,10 @@ div[data-testid="stAppViewContainer"] > .main > div {
     font-size: 14px;
 }
 .brand-title {
-    font-size: 20px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.5px; margin: 0; line-height: 1;
+    font-size: 26px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; margin: 0; line-height: 1;
 }
 .brand-sub {
-    font-size: 12px; color: var(--text-secondary); margin: 4px 0 0 0; font-weight: 500;
+    font-size: 13px; color: var(--text-secondary); margin: 6px 0 0 0; font-weight: 500;
 }
 .system-status {
     display: flex; align-items: center; gap: 8px;
@@ -215,11 +237,6 @@ div[data-testid="stButton"] > button[kind="primary"] {
 }
 div[data-testid="stButton"] > button[kind="primary"]:hover { opacity: 0.9 !important; }
 
-/* Multiselect dark/light adaptability */
-div[data-baseweb="select"] > div {
-    background-color: var(--bg-surface) !important; border-color: var(--border-color) !important;
-}
-
 hr { border-color: var(--border-color); margin: 2rem 0; }
 </style>
 """, unsafe_allow_html=True)
@@ -245,6 +262,27 @@ sample_malware = bundle.get("sample_malware", ["SEND_SMS", "RECEIVE_BOOT_COMPLET
 sample_goodware = bundle.get("sample_goodware", ["VIBRATE", "INTERNET", "ACCESS_NETWORK_STATE"])
 
 # =====================================================================
+# SIDEBAR NAVIGATION (RESTORED)
+# =====================================================================
+with st.sidebar:
+    st.markdown("""
+        <div style="text-align: center; padding: 10px 0 24px 0;">
+            <div style="font-size: 42px; margin-bottom: 8px;">🛡️</div>
+            <h2 style="margin: 0; font-size: 20px; font-weight: 700; color: var(--text-primary);">AppShield</h2>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Android Risk Analyzer</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    page = st.radio(
+        "Navigation",
+        ["Single App Check", "Batch Check", "Model Insights"],
+        label_visibility="collapsed"
+    )
+    
+    st.markdown("---")
+    st.caption("Educational/research prototype — not an antivirus product.")
+
+# =====================================================================
 # UI: TECHNICAL HEADER & METRICS
 # =====================================================================
 st.markdown("""
@@ -252,7 +290,7 @@ st.markdown("""
     <div class="brand-lockup">
         <div class="brand-mark">AS</div>
         <div>
-            <h1 class="brand-title">AppShield Intelligence</h1>
+            <h1 class="brand-title">AppShield</h1>
             <p class="brand-sub">AI-Powered Android Security & Malware Analysis Platform</p>
         </div>
     </div>
@@ -283,155 +321,206 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+
 # =====================================================================
-# UI: SPLIT PANE ANALYSIS ARCHITECTURE
+# PAGE 1: SINGLE APP CHECK
 # =====================================================================
-input_col, output_col = st.columns([1, 1.4], gap="large")
+if page == "Single App Check":
+    input_col, output_col = st.columns([1, 1.4], gap="large")
 
-with input_col:
-    st.markdown('<div class="section-label">Target Config</div>', unsafe_allow_html=True)
-    st.markdown('<h2 class="panel-heading">Manifest & API Extraction</h2>', unsafe_allow_html=True)
-    
-    st.caption("Load a standard behavioral profile or configure custom permission vectors.")
-    c1, c2 = st.columns(2)
-    if c1.button("Load Safe Utility", use_container_width=True):
-        st.session_state["active_payload"] = sample_goodware
-    if c2.button("Load SMS Trojan", use_container_width=True):
-        st.session_state["active_payload"] = sample_malware
+    with input_col:
+        st.markdown('<div class="section-label">TARGET CONFIG</div>', unsafe_allow_html=True)
+        st.markdown('<h2 class="panel-heading">Manifest & API Extraction</h2>', unsafe_allow_html=True)
         
-    default_payload = st.session_state.get("active_payload", sample_goodware)
-    
-    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
-    user_payload = st.multiselect(
-        "Feature Vectors (Search 241 indices)",
-        options=features,
-        default=[p for p in default_payload if p in features]
-    )
-
-    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
-    execute_btn = st.button("Execute Technical Analysis", type="primary", use_container_width=True)
-
-with output_col:
-    st.markdown('<div class="section-label">Analysis Output</div>', unsafe_allow_html=True)
-    st.markdown('<h2 class="panel-heading">Security Diagnostic Result</h2>', unsafe_allow_html=True)
-    
-    # State tracking for the Pipeline Animation
-    is_scanned = execute_btn or len(user_payload) > 0
-    
-    # -----------------------------------------------------------------
-    # VISUAL COMPONENT: TECHNICAL ANALYSIS FLOW
-    # -----------------------------------------------------------------
-    pipeline_active = "active" if is_scanned else ""
-    st.markdown(f"""
-    <div class="pipeline-container">
-        <div class="pipeline-line"></div>
-        <div class="pipeline-step {pipeline_active}">
-            <div class="step-node">1</div>
-            <div class="step-label">Manifest<br>Input</div>
-        </div>
-        <div class="pipeline-step {pipeline_active}">
-            <div class="step-node">2</div>
-            <div class="step-label">Vector<br>Extraction</div>
-        </div>
-        <div class="pipeline-step {pipeline_active}">
-            <div class="step-node">3</div>
-            <div class="step-label">ML<br>Processing</div>
-        </div>
-        <div class="pipeline-step {pipeline_active}">
-            <div class="step-node">4</div>
-            <div class="step-label">Threat<br>Classification</div>
-        </div>
-        <div class="pipeline-step {pipeline_active}">
-            <div class="step-node">5</div>
-            <div class="step-label">Final<br>Diagnostic</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    if execute_btn:
-        with st.spinner("Processing vector extraction and ensemble classification..."):
-            time.sleep(0.6) # Simulated processing time for UX weight
+        st.caption("Load a standard behavioral profile or configure custom permission vectors.")
+        c1, c2 = st.columns(2)
+        if c1.button("Load Safe Utility", use_container_width=True):
+            st.session_state["active_payload"] = sample_goodware
+        if c2.button("Load SMS Trojan", use_container_width=True):
+            st.session_state["active_payload"] = sample_malware
             
-    if is_scanned:
-        # Machine Learning Inference
-        df_target = pd.DataFrame([{f: (1 if f in user_payload else 0) for f in features}])
-        pred = model.predict(df_target)[0]
-        prob = model.predict_proba(df_target)[0][1]
-
-        # -------------------------------------------------------------
-        # VISUAL COMPONENT: RESULT HUD
-        # -------------------------------------------------------------
-        if pred == 1:
-            st.markdown(f"""
-            <div class="diagnostic-hud danger">
-                <div>
-                    <h3 class="hud-title">Critical Threat Detected</h3>
-                    <p class="hud-desc">The extracted permission vectors strongly correlate with known malware behaviors, privilege escalation, or unauthorized data exfiltration.</p>
-                </div>
-                <div class="hud-score-block">
-                    <div class="hud-score">{prob*100:.1f}%</div>
-                    <div class="hud-score-lbl">Threat Probability</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-            <div class="diagnostic-hud safe">
-                <div>
-                    <h3 class="hud-title">Safe Profile Verified</h3>
-                    <p class="hud-desc">The requested application capabilities align with standard, benign utility parameters. No anomalous signatures detected.</p>
-                </div>
-                <div class="hud-score-block">
-                    <div class="hud-score">{(1-prob)*100:.1f}%</div>
-                    <div class="hud-score-lbl">Safety Confidence</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # -------------------------------------------------------------
-        # VISUAL COMPONENT: DATA VISUALIZATION
-        # -------------------------------------------------------------
-        st.markdown('<div class="section-label" style="margin-top: 24px;">Interpretability</div>', unsafe_allow_html=True)
-        st.markdown('<h2 class="panel-heading" style="font-size:14px; color:var(--text-secondary);">Predictive Feature Contributions</h2>', unsafe_allow_html=True)
+        default_payload = st.session_state.get("active_payload", sample_goodware)
         
-        all_importances = pd.Series(model.feature_importances_, index=features)
-        target_factors = all_importances[all_importances.index.isin(user_payload)].sort_values(ascending=False).head(5)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        user_payload = st.multiselect(
+            "Feature Vectors (Search 241 indices)",
+            options=features,
+            default=[p for p in default_payload if p in features]
+        )
 
-        if not target_factors.empty:
-            df_chart = pd.DataFrame({
-                "Vector": target_factors.index, 
-                "Severity Weight": target_factors.values
-            })
-            
-            # Professionally styled Altair Bar Chart
-            # Uses variable color mapping to adapt to Light/Dark mode via Streamlit's native rendering
-            chart = alt.Chart(df_chart).mark_bar(
-                color="#3B82F6" if pred == 0 else "#EF4444", 
-                height=20,
-                cornerRadiusEnd=2
-            ).encode(
-                x=alt.X("Severity Weight:Q", axis=None),
-                y=alt.Y("Vector:N", sort="-x", title=None, 
-                        axis=alt.Axis(labelFont="JetBrains Mono", labelFontSize=11, tickColor="transparent", domainColor="transparent")),
-                tooltip=["Vector", "Severity Weight"]
-            ).properties(
-                height=220
-            ).configure_view(
-                strokeOpacity=0
-            )
-            
-            st.altair_chart(chart, use_container_width=True)
-        else:
-            st.markdown("<p style='font-size: 13px; color: var(--text-muted);'>No high-severity vectors present in the current payload.</p>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+        execute_btn = st.button("Execute Neural Analysis", type="primary", use_container_width=True)
 
-    else:
-        # Professional Empty State
-        st.markdown("""
-        <div style="border: 1px dashed var(--border-color); border-radius: 8px; padding: 48px 24px; text-align: center; background-color: var(--bg-surface);">
-            <div style="font-size: 24px; color: var(--text-muted); margin-bottom: 12px;">⌖</div>
-            <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">AWAITING MANIFEST INPUT</div>
-            <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Configure target features and execute analysis to view diagnostic pipeline.</p>
+    with output_col:
+        st.markdown('<div class="section-label">ANALYSIS OUTPUT</div>', unsafe_allow_html=True)
+        st.markdown('<h2 class="panel-heading">Security Diagnostic Result</h2>', unsafe_allow_html=True)
+        
+        is_scanned = execute_btn or len(user_payload) > 0
+        
+        # PIPELINE ANIMATION
+        pipeline_active = "active" if is_scanned else ""
+        st.markdown(f"""
+        <div class="pipeline-container">
+            <div class="pipeline-line"></div>
+            <div class="pipeline-step {pipeline_active}">
+                <div class="step-node">1</div>
+                <div class="step-label">Manifest<br>Input</div>
+            </div>
+            <div class="pipeline-step {pipeline_active}">
+                <div class="step-node">2</div>
+                <div class="step-label">Vector<br>Extraction</div>
+            </div>
+            <div class="pipeline-step {pipeline_active}">
+                <div class="step-node">3</div>
+                <div class="step-label">ML<br>Processing</div>
+            </div>
+            <div class="pipeline-step {pipeline_active}">
+                <div class="step-node">4</div>
+                <div class="step-label">Threat<br>Classification</div>
+            </div>
+            <div class="pipeline-step {pipeline_active}">
+                <div class="step-node">5</div>
+                <div class="step-label">Final<br>Diagnostic</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
-st.markdown("<hr>", unsafe_allow_html=True)
+        if execute_btn:
+            with st.spinner("Processing vector extraction and ensemble classification..."):
+                time.sleep(0.6) 
+                
+        if is_scanned:
+            df_target = pd.DataFrame([{f: (1 if f in user_payload else 0) for f in features}])
+            pred = model.predict(df_target)[0]
+            prob = model.predict_proba(df_target)[0][1]
+
+            # RESULT HUD
+            if pred == 1:
+                st.markdown(f"""
+                <div class="diagnostic-hud danger">
+                    <div>
+                        <h3 class="hud-title">Critical Threat Detected</h3>
+                        <p class="hud-desc">The extracted permission vectors strongly correlate with known malware behaviors, privilege escalation, or unauthorized data exfiltration.</p>
+                    </div>
+                    <div class="hud-score-block">
+                        <div class="hud-score">{prob*100:.1f}%</div>
+                        <div class="hud-score-lbl">Threat Probability</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                <div class="diagnostic-hud safe">
+                    <div>
+                        <h3 class="hud-title">Safe Profile Verified</h3>
+                        <p class="hud-desc">The requested application capabilities align with standard, benign utility parameters. No anomalous signatures detected.</p>
+                    </div>
+                    <div class="hud-score-block">
+                        <div class="hud-score">{(1-prob)*100:.1f}%</div>
+                        <div class="hud-score-lbl">Safety Confidence</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # DATA VISUALIZATION
+            st.markdown('<div class="section-label" style="margin-top: 24px;">Interpretability</div>', unsafe_allow_html=True)
+            st.markdown('<h2 class="panel-heading" style="font-size:14px; color:var(--text-secondary);">Predictive Feature Contributions</h2>', unsafe_allow_html=True)
+            
+            all_importances = pd.Series(model.feature_importances_, index=features)
+            target_factors = all_importances[all_importances.index.isin(user_payload)].sort_values(ascending=False).head(5)
+
+            if not target_factors.empty:
+                df_chart = pd.DataFrame({"Vector": target_factors.index, "Severity Weight": target_factors.values})
+                
+                chart = alt.Chart(df_chart).mark_bar(
+                    color="#3B82F6" if pred == 0 else "#EF4444", 
+                    height=20, cornerRadiusEnd=2
+                ).encode(
+                    x=alt.X("Severity Weight:Q", axis=None),
+                    y=alt.Y("Vector:N", sort="-x", title=None, 
+                            axis=alt.Axis(labelFont="JetBrains Mono", labelFontSize=11, tickColor="transparent", domainColor="transparent")),
+                    tooltip=["Vector", "Severity Weight"]
+                ).properties(height=220).configure_view(strokeOpacity=0)
+                
+                st.altair_chart(chart, use_container_width=True)
+            else:
+                st.markdown("<p style='font-size: 13px; color: var(--text-muted);'>No high-severity vectors present in the current payload.</p>", unsafe_allow_html=True)
+
+        else:
+            st.markdown("""
+            <div style="border: 1px dashed var(--border-color); border-radius: 8px; padding: 48px 24px; text-align: center; background-color: var(--bg-surface);">
+                <div style="font-size: 24px; color: var(--text-muted); margin-bottom: 12px;">⌖</div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">AWAITING MANIFEST INPUT</div>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Configure target features and execute analysis to view diagnostic pipeline.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+
+# =====================================================================
+# PAGE 2: BATCH CHECK
+# =====================================================================
+elif page == "Batch Check":
+    st.markdown('<div class="section-label">BATCH AUDIT</div>', unsafe_allow_html=True)
+    st.markdown('<h2 class="panel-heading">Fleet Diagnostics</h2>', unsafe_allow_html=True)
+    st.caption("Upload a CSV file containing application permission manifests for mass screening.")
+
+    uploaded_csv = st.file_uploader("", type=["csv"], label_visibility="collapsed")
+
+    if uploaded_csv:
+        raw_df = pd.read_csv(uploaded_csv)
+        raw_df.columns = raw_df.columns.str.strip()
+
+        missing_cols = [c for c in features if c not in raw_df.columns]
+        for mc in missing_cols:
+            raw_df[mc] = 0
+
+        X_screen = raw_df[features].fillna(0)
+        preds = model.predict(X_screen)
+        probs = model.predict_proba(X_screen)[:, 1]
+
+        total_apps = len(preds)
+        flagged_threats = int(preds.sum())
+
+        st.markdown(f"""
+        <div style="display:flex; gap:32px; background:var(--bg-surface); padding:24px; border:1px solid var(--border-color); border-radius:8px; margin-bottom:24px;">
+            <div>
+                <div class="metric-lbl">Total Scanned</div>
+                <div class="metric-val" style="font-size:28px;">{total_apps}</div>
+            </div>
+            <div>
+                <div class="metric-lbl">Critical Threats</div>
+                <div class="metric-val" style="font-size:28px; color:var(--status-danger-text);">{flagged_threats}</div>
+            </div>
+            <div>
+                <div class="metric-lbl">Verified Safe</div>
+                <div class="metric-val" style="font-size:28px; color:var(--status-safe-text);">{total_apps - flagged_threats}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        audit_results = raw_df.copy()
+        audit_results["Risk_Score"] = (probs * 100).round(1).astype(str) + "%"
+        audit_results["Verdict"] = ["🚨 HIGH RISK" if p == 1 else "✅ SAFE" for p in preds]
+
+        show_cols = ["Verdict", "Risk_Score"] + [c for c in audit_results.columns if c not in ["Verdict", "Risk_Score"]][:5]
+        st.dataframe(audit_results[show_cols], use_container_width=True)
+
+
+# =====================================================================
+# PAGE 3: MODEL INSIGHTS
+# =====================================================================
+elif page == "Model Insights":
+    st.markdown('<div class="section-label">THREAT INTELLIGENCE</div>', unsafe_allow_html=True)
+    st.markdown('<h2 class="panel-heading">Global Feature Weights</h2>', unsafe_allow_html=True)
+    st.caption("The mathematical weights of the most critical threat signatures across the entire TUANDROMD dataset.")
+    
+    top_global = pd.Series(model.feature_importances_, index=features).sort_values(ascending=False).head(15)
+    
+    df_global = pd.DataFrame({"Feature": top_global.index, "Weight": top_global.values})
+    chart_global = alt.Chart(df_global).mark_bar(cornerRadiusEnd=4, color="#2563EB", height=24).encode(
+        x=alt.X("Weight:Q", title="Global Predictive Weight", axis=alt.Axis(grid=False)),
+        y=alt.Y("Feature:N", sort="-x", title=None, axis=alt.Axis(labelColor="#64748B", labelFontSize=12)),
+        tooltip=["Feature", "Weight"]
+    ).properties(height=450).configure_view(strokeOpacity=0)
+    
+    st.altair_chart(chart_global, use_container_width=True)
