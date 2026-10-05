@@ -1,6 +1,6 @@
 """
 AppShield - Android Privacy & Malware Risk Analyzer
-Production-grade Technical Blue UI with Live Analysis Pipeline.
+Production-grade Technical UI - Fixed Layout & Background.
 """
 
 import streamlit as st
@@ -18,14 +18,14 @@ st.set_page_config(
 )
 
 # =====================================================================
-# TECHNICAL BLUE DESIGN SYSTEM (NATIVE LIGHT/DARK MODE)
+# TECHNICAL BLUE DESIGN SYSTEM (CLEANSED)
 # =====================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    /* LIGHT MODE VARIABLES (Technical Blue-Gray) */
+    /* LIGHT MODE VARIABLES */
     --bg-app: #F4F7FA;
     --bg-panel: #FFFFFF;
     --bg-panel-alt: #F8FAFC;
@@ -38,9 +38,7 @@ st.markdown("""
     --border-focus: #94A3B8;
     
     --tech-blue: #2563EB;
-    --tech-blue-light: #EFF6FF;
     --tech-blue-glow: rgba(37, 99, 235, 0.15);
-    
     --cyan-accent: #0EA5E9;
     
     --safe-base: #10B981;
@@ -56,7 +54,7 @@ st.markdown("""
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* DARK MODE VARIABLES (Deep Navy Technical) */
+        /* DARK MODE VARIABLES */
         --bg-app: #0B1121;
         --bg-panel: #111827;
         --bg-panel-alt: #1E293B;
@@ -69,9 +67,7 @@ st.markdown("""
         --border-focus: #334155;
         
         --tech-blue: #3B82F6;
-        --tech-blue-light: rgba(59, 130, 246, 0.1);
         --tech-blue-glow: rgba(59, 130, 246, 0.25);
-        
         --cyan-accent: #38BDF8;
         
         --safe-base: #10B981;
@@ -86,18 +82,15 @@ st.markdown("""
     }
 }
 
-/* Global Setup */
 html, body, [class*="css"] {
     font-family: 'Inter', -apple-system, sans-serif !important;
     background-color: var(--bg-app) !important;
     color: var(--text-primary) !important;
 }
 
-/* Subtle Technical Grid Background */
+/* NO MORE GRAPH PAPER. Clean solid background. */
 [data-testid="stAppViewContainer"] {
-    background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: center top;
+    background: var(--bg-app) !important;
 }
 
 /* Hide Default Streamlit Clutter */
@@ -126,7 +119,7 @@ div[data-testid="stSidebar"] {
 /* Typography */
 .mono { font-family: 'JetBrains Mono', monospace; }
 .kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--tech-blue); margin-bottom: 6px; }
-.section-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px 0; letter-spacing: -0.2px; }
+.section-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px 0; letter-spacing: -0.2px; }
 
 /* Refined Header Control Bar */
 .control-bar {
@@ -146,7 +139,7 @@ div[data-testid="stSidebar"] {
 }
 @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
-/* Integrated System Overview (No giant cards) */
+/* Integrated System Overview */
 .system-overview {
     display: flex; gap: 48px; padding: 16px 24px; background: var(--bg-panel);
     border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 32px;
@@ -155,15 +148,7 @@ div[data-testid="stSidebar"] {
 .om-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1; }
 .om-lbl { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* Panels */
-.panel {
-    background: var(--bg-panel); border: 1px solid var(--border-subtle);
-    border-radius: 8px; padding: 24px; box-shadow: var(--shadow-soft);
-}
-
-/* ---------------------------------------------------- */
 /* THE HERO: PREMIUM SECURITY DIAGNOSTIC */
-/* ---------------------------------------------------- */
 .diagnostic-hero {
     border-radius: 8px; padding: 32px; display: flex; justify-content: space-between;
     align-items: center; border: 1px solid; margin-bottom: 24px; position: relative; overflow: hidden;
@@ -187,21 +172,13 @@ div[data-testid="stSidebar"] {
 .diagnostic-hero.danger .diag-score { color: var(--danger-base); }
 .diag-score-lbl { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-top: 6px; letter-spacing: 0.5px; }
 
-/* ---------------------------------------------------- */
 /* LIVE TECHNICAL PIPELINE */
-/* ---------------------------------------------------- */
-.pipeline-wrapper {
-    position: relative; padding: 24px 0; margin-bottom: 24px;
-}
+.pipeline-wrapper { position: relative; padding: 24px 0; margin-bottom: 24px; }
 .pipeline-track {
     position: absolute; top: 38px; left: 40px; right: 40px; height: 2px; background: var(--border-subtle); z-index: 0;
 }
-.pipeline-nodes {
-    display: flex; justify-content: space-between; position: relative; z-index: 1;
-}
-.node {
-    display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; gap: 10px;
-}
+.pipeline-nodes { display: flex; justify-content: space-between; position: relative; z-index: 1; }
+.node { display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; gap: 10px; }
 .node-circle {
     width: 30px; height: 30px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-subtle);
     display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-tertiary);
@@ -210,9 +187,7 @@ div[data-testid="stSidebar"] {
 .node-title { font-size: 11px; font-weight: 600; color: var(--text-secondary); line-height: 1.3; }
 
 /* Pipeline Animation States */
-.node.completed .node-circle {
-    background: var(--tech-blue); border-color: var(--tech-blue); color: #FFF;
-}
+.node.completed .node-circle { background: var(--tech-blue); border-color: var(--tech-blue); color: #FFF; }
 .node.completed .node-title { color: var(--text-primary); }
 
 .node.active .node-circle {
@@ -220,22 +195,16 @@ div[data-testid="stSidebar"] {
     box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15); animation: node-pulse 1.5s infinite;
 }
 .node.active .node-title { color: var(--cyan-accent); }
-
 @keyframes node-pulse { 0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.3); } 70% { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); } 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); } }
 
-/* Scanning Effect Line */
 .scan-line {
     position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--cyan-accent);
     box-shadow: 0 0 10px var(--cyan-accent); z-index: 2; opacity: 0;
 }
-.scanning .scan-line {
-    animation: scan-move 1.5s ease-in-out infinite; opacity: 1;
-}
+.scanning .scan-line { animation: scan-move 1.5s ease-in-out infinite; opacity: 1; }
 @keyframes scan-move { 0% { left: 5%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 95%; opacity: 0; } }
 
-/* ---------------------------------------------------- */
 /* INTEGRATED ACTIVITY LOG */
-/* ---------------------------------------------------- */
 .activity-log {
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary);
     background: var(--bg-panel-alt); border: 1px solid var(--border-subtle); border-radius: 6px;
@@ -247,9 +216,7 @@ div[data-testid="stSidebar"] {
 @keyframes fade-in { to { opacity: 1; } }
 
 /* UI Overrides */
-div[data-baseweb="select"] > div {
-    background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border-subtle) !important;
-}
+div[data-baseweb="select"] > div { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border-subtle) !important; }
 span[data-baseweb="tag"] {
     background-color: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important;
     border-radius: 4px !important; font-family: 'JetBrains Mono', monospace !important; font-size: 11px !important;
@@ -259,11 +226,8 @@ div[data-testid="stButton"] > button {
     border: 1px solid var(--border-focus) !important; background: var(--bg-panel) !important;
     color: var(--text-primary) !important; padding: 12px 24px !important; transition: all 0.2s !important;
 }
-div[data-testid="stButton"] > button[kind="primary"] {
-    background: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important;
-}
+div[data-testid="stButton"] > button[kind="primary"] { background: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important; }
 div[data-testid="stButton"] > button[kind="primary"]:hover { background: #1D4ED8 !important; }
-
 hr { border-color: var(--border-subtle); margin: 2rem 0; }
 </style>
 """, unsafe_allow_html=True)
@@ -308,7 +272,6 @@ with st.sidebar:
     st.markdown('<div class="kicker" style="margin-top: 24px; margin-bottom: 12px;">INTELLIGENCE</div>', unsafe_allow_html=True)
     page2 = st.radio("Navigation2", ["Threat Intelligence"], label_visibility="collapsed")
     
-    # Merge radio button selections cleanly
     if st.session_state.get('last_page') != page and page != "Single App Analysis":
         selected_page = page
     elif st.session_state.get('last_page') != page2 and page2 != "Threat Intelligence":
@@ -355,15 +318,13 @@ st.markdown("""
 # =====================================================================
 if selected_page == "Single App Analysis":
     
-    # Split layout: Configuration (Left) | Analysis (Right)
     col_config, col_analysis = st.columns([1, 1.6], gap="large")
 
     with col_config:
-        st.markdown('<div class="panel">', unsafe_allow_html=True)
         st.markdown('<div class="kicker">Target Application</div>', unsafe_allow_html=True)
         st.markdown('<h2 class="section-title">Manifest Configuration</h2>', unsafe_allow_html=True)
-        
         st.caption("Load a profile or configure custom permission vectors.")
+        
         c1, c2 = st.columns(2)
         if c1.button("✅ Load Safe App", use_container_width=True):
             st.session_state["active_payload"] = sample_goodware
@@ -381,18 +342,15 @@ if selected_page == "Single App Analysis":
 
         st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
         execute_btn = st.button("Initialize Analysis", type="primary", use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_analysis:
-        # Placeholders for dynamic rendering
         hero_ph = st.empty()
         pipeline_ph = st.empty()
         log_ph = st.empty()
         chart_ph = st.empty()
 
-        # Helper function for the Pipeline UI
         def render_pipeline(active_idx, is_scanning=False):
-            scan_class = "scanning" if is_scanned else ""
+            scan_class = "scanning" if is_scanning else ""
             nodes = [
                 ("1", "Manifest Input"),
                 ("2", "Feature Extraction"),
@@ -408,7 +366,6 @@ if selected_page == "Single App Analysis":
             html += '</div></div>'
             pipeline_ph.markdown(html, unsafe_allow_html=True)
 
-        # Helper function for Integrated Log
         def render_logs(log_list):
             html = '<div class="activity-log">'
             for t, msg in log_list:
@@ -416,65 +373,47 @@ if selected_page == "Single App Analysis":
             html += '</div>'
             log_ph.markdown(html, unsafe_allow_html=True)
 
-        is_scanned = execute_btn
-
         if execute_btn:
-            # -------------------------------------------------------------
-            # LIVE INTERACTION: The Analysis Sequence
-            # -------------------------------------------------------------
             logs = []
-            
-            # Reset Hero
             hero_ph.empty()
             chart_ph.empty()
 
-            # Step 1: Manifest
             render_pipeline(0, True)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Target manifest loaded into sandbox."))
             render_logs(logs)
             time.sleep(0.3)
 
-            # Step 2: Extraction
             render_pipeline(1, True)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], f"Extracted {len(features)} total features from binary."))
             render_logs(logs)
             time.sleep(0.3)
 
-            # Step 3: Vector
             render_pipeline(2, True)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], f"Generated matrix. {len(user_payload)} active permission vectors identified."))
             render_logs(logs)
             time.sleep(0.4)
 
-            # Step 4: ML Processing
             render_pipeline(3, True)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Model inference started (Random Forest Ensemble)."))
             render_logs(logs)
             time.sleep(0.5)
 
-            # Execution
             df_target = pd.DataFrame([{f: (1 if f in user_payload else 0) for f in features}])
             pred = model.predict(df_target)[0]
             prob = model.predict_proba(df_target)[0][1]
 
-            # Step 5: Classification
             render_pipeline(4, True)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Threat patterns evaluated against TUANDROMD signatures."))
             render_logs(logs)
             time.sleep(0.4)
 
-            # Complete
             render_pipeline(5, False)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Diagnostic generated successfully."))
             render_logs(logs)
             
             st.session_state["last_res"] = {"pred": pred, "prob": prob, "payload": user_payload, "logs": logs}
 
-        # -------------------------------------------------------------
-        # COMPOSITION RULE: RESULT FIRST (Hero Assessment)
-        # -------------------------------------------------------------
         if "last_res" in st.session_state and not execute_btn:
-            # Re-render without animation if already scanned
             render_pipeline(5, False)
             render_logs(st.session_state["last_res"]["logs"])
             
@@ -534,7 +473,6 @@ if selected_page == "Single App Analysis":
                     st.markdown("<p style='font-size: 13px; color: var(--text-tertiary);'>No high-severity vectors present in the current payload.</p>", unsafe_allow_html=True)
 
         elif not execute_btn:
-            # Default State for Output Column
             hero_ph.markdown("""
             <div style="border: 1px dashed var(--border-focus); border-radius: 8px; padding: 48px 24px; text-align: center; background-color: var(--bg-panel-alt);">
                 <div style="font-size: 24px; color: var(--text-tertiary); margin-bottom: 12px;">⌖</div>
@@ -606,7 +544,6 @@ elif selected_page == "Threat Intelligence":
     
     df_global = pd.DataFrame({"Feature": top_global.index, "Weight": top_global.values})
     
-    # Altair chart respects Streamlit's native theme parsing automatically
     chart_global = alt.Chart(df_global).mark_bar(cornerRadiusEnd=4, color="#2563EB", height=24).encode(
         x=alt.X("Weight:Q", title="Global Predictive Weight", axis=alt.Axis(grid=False)),
         y=alt.Y("Feature:N", sort="-x", title=None, axis=alt.Axis(labelColor="#64748B", labelFont="JetBrains Mono", labelFontSize=12)),
