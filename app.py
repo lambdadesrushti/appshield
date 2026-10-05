@@ -1,6 +1,6 @@
 """
-AppShield - Android Privacy & Malware Risk Analyzer
-Production-grade Technical UI - Fixed Layout & Background.
+AppShield - Enterprise Technical Security Platform
+Final Layout: High-Contrast Developer Console Aesthetic.
 """
 
 import streamlit as st
@@ -18,17 +18,16 @@ st.set_page_config(
 )
 
 # =====================================================================
-# TECHNICAL BLUE DESIGN SYSTEM (CLEANSED)
+# ENTERPRISE CSS: NATIVE LIGHT/DARK MODE DUAL THEME
 # =====================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    /* LIGHT MODE VARIABLES */
-    --bg-app: #F4F7FA;
-    --bg-panel: #FFFFFF;
-    --bg-panel-alt: #F8FAFC;
+    --bg-main: #F4F7FA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-alt: #F8FAFC;
     
     --text-primary: #0F172A;
     --text-secondary: #475569;
@@ -38,7 +37,6 @@ st.markdown("""
     --border-focus: #94A3B8;
     
     --tech-blue: #2563EB;
-    --tech-blue-glow: rgba(37, 99, 235, 0.15);
     --cyan-accent: #0EA5E9;
     
     --safe-base: #10B981;
@@ -48,16 +46,13 @@ st.markdown("""
     --danger-base: #EF4444;
     --danger-bg: #FEF2F2;
     --danger-border: #FECACA;
-    
-    --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* DARK MODE VARIABLES */
-        --bg-app: #0B1121;
-        --bg-panel: #111827;
-        --bg-panel-alt: #1E293B;
+        --bg-main: #0B1121;
+        --bg-surface: #111827;
+        --bg-surface-alt: #1E293B;
         
         --text-primary: #F8FAFC;
         --text-secondary: #94A3B8;
@@ -67,7 +62,6 @@ st.markdown("""
         --border-focus: #334155;
         
         --tech-blue: #3B82F6;
-        --tech-blue-glow: rgba(59, 130, 246, 0.25);
         --cyan-accent: #38BDF8;
         
         --safe-base: #10B981;
@@ -77,23 +71,15 @@ st.markdown("""
         --danger-base: #EF4444;
         --danger-bg: rgba(239, 68, 68, 0.05);
         --danger-border: rgba(239, 68, 68, 0.2);
-        
-        --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
     }
 }
 
 html, body, [class*="css"] {
     font-family: 'Inter', -apple-system, sans-serif !important;
-    background-color: var(--bg-app) !important;
+    background-color: var(--bg-main) !important;
     color: var(--text-primary) !important;
 }
 
-/* NO MORE GRAPH PAPER. Clean solid background. */
-[data-testid="stAppViewContainer"] {
-    background: var(--bg-app) !important;
-}
-
-/* Hide Default Streamlit Clutter */
 header[data-testid="stHeader"] { display: none !important; }
 footer { display: none !important; }
 .stDeployButton { display: none !important; }
@@ -101,7 +87,7 @@ div[data-testid="stAppViewContainer"] > .main > div { padding: 2.5rem 3.5rem !im
 
 /* Sidebar Navigation */
 div[data-testid="stSidebar"] {
-    background-color: var(--bg-panel) !important;
+    background-color: var(--bg-surface) !important;
     border-right: 1px solid var(--border-subtle) !important;
 }
 .sidebar-brand {
@@ -111,15 +97,14 @@ div[data-testid="stSidebar"] {
     width: 32px; height: 32px; background: var(--tech-blue); border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     color: white; font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 16px;
-    box-shadow: 0 0 12px var(--tech-blue-glow);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
 }
 .sidebar-title { font-size: 20px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.5px; margin: 0; }
 .sidebar-subtitle { font-size: 11px; font-weight: 500; color: var(--text-secondary); margin-top: 2px; }
 
 /* Typography */
-.mono { font-family: 'JetBrains Mono', monospace; }
 .kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--tech-blue); margin-bottom: 6px; }
-.section-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px 0; letter-spacing: -0.2px; }
+.section-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px 0; letter-spacing: -0.2px; }
 
 /* Refined Header Control Bar */
 .control-bar {
@@ -131,7 +116,7 @@ div[data-testid="stSidebar"] {
 .sys-status {
     display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
     font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 4px;
-    border: 1px solid var(--border-subtle); background: var(--bg-panel); color: var(--text-secondary);
+    border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-secondary);
 }
 .pulse-dot {
     width: 6px; height: 6px; border-radius: 50%; background-color: var(--safe-base);
@@ -141,93 +126,91 @@ div[data-testid="stSidebar"] {
 
 /* Integrated System Overview */
 .system-overview {
-    display: flex; gap: 48px; padding: 16px 24px; background: var(--bg-panel);
+    display: flex; gap: 48px; padding: 16px 24px; background: var(--bg-surface);
     border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 32px;
 }
 .overview-metric { display: flex; flex-direction: column; gap: 4px; }
 .om-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1; }
 .om-lbl { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* THE HERO: PREMIUM SECURITY DIAGNOSTIC */
-.diagnostic-hero {
-    border-radius: 8px; padding: 32px; display: flex; justify-content: space-between;
-    align-items: center; border: 1px solid; margin-bottom: 24px; position: relative; overflow: hidden;
+/* Developer Console Styling (The Dark Output Pane) */
+.dev-console {
+    background-color: #0F172A; border-radius: 8px; padding: 32px; border: 1px solid #1E293B;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.2); height: 100%; min-height: 400px;
 }
-.diagnostic-hero.safe { background: var(--safe-bg); border-color: var(--safe-border); border-left: 6px solid var(--safe-base); }
-.diagnostic-hero.danger { background: var(--danger-bg); border-color: var(--danger-border); border-left: 6px solid var(--danger-base); }
+.dev-console-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 300px;
+}
+.dev-console-icon { font-size: 32px; color: #38BDF8; margin-bottom: 16px; opacity: 0.8; }
+.dev-console-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #F8FAFC; letter-spacing: 1px; margin-bottom: 8px; }
+.dev-console-desc { font-size: 13px; color: #94A3B8; text-align: center; max-width: 250px; line-height: 1.5; }
+
+/* Hero Diagnostic Block */
+.diagnostic-hero {
+    border-radius: 6px; padding: 24px; display: flex; justify-content: space-between;
+    align-items: center; border: 1px solid; margin-bottom: 24px; background: #1E293B;
+}
+.diagnostic-hero.safe { border-color: rgba(16, 185, 129, 0.3); border-left: 4px solid #10B981; }
+.diagnostic-hero.danger { border-color: rgba(239, 68, 68, 0.3); border-left: 4px solid #EF4444; }
 
 .diag-header { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.diagnostic-hero.safe .diag-header { color: var(--safe-base); }
-.diagnostic-hero.danger .diag-header { color: var(--danger-base); }
+.diagnostic-hero.safe .diag-header { color: #34D399; }
+.diagnostic-hero.danger .diag-header { color: #F87171; }
 
-.diag-title { font-size: 24px; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px; }
-.diagnostic-hero.safe .diag-title { color: var(--safe-base); }
-.diagnostic-hero.danger .diag-title { color: var(--danger-base); }
-
-.diag-desc { font-size: 14px; color: var(--text-secondary); margin: 0; max-width: 80%; line-height: 1.5; }
+.diag-title { font-size: 20px; font-weight: 700; margin: 0 0 6px 0; color: #F8FAFC; }
+.diag-desc { font-size: 13px; color: #94A3B8; margin: 0; max-width: 80%; line-height: 1.5; }
 
 .diag-score-block { text-align: right; }
-.diag-score { font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
-.diagnostic-hero.safe .diag-score { color: var(--safe-base); }
-.diagnostic-hero.danger .diag-score { color: var(--danger-base); }
-.diag-score-lbl { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-top: 6px; letter-spacing: 0.5px; }
+.diag-score { font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+.diagnostic-hero.safe .diag-score { color: #34D399; }
+.diagnostic-hero.danger .diag-score { color: #F87171; }
+.diag-score-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #94A3B8; margin-top: 6px; letter-spacing: 0.5px; }
 
-/* LIVE TECHNICAL PIPELINE */
-.pipeline-wrapper { position: relative; padding: 24px 0; margin-bottom: 24px; }
-.pipeline-track {
-    position: absolute; top: 38px; left: 40px; right: 40px; height: 2px; background: var(--border-subtle); z-index: 0;
-}
+/* Live Technical Pipeline inside Dark Console */
+.pipeline-wrapper { position: relative; padding: 20px 0; margin-bottom: 24px; }
+.pipeline-track { position: absolute; top: 34px; left: 30px; right: 30px; height: 1px; background: #334155; z-index: 0; }
 .pipeline-nodes { display: flex; justify-content: space-between; position: relative; z-index: 1; }
-.node { display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center; gap: 10px; }
+.node { display: flex; flex-direction: column; align-items: center; width: 80px; text-align: center; gap: 8px; }
 .node-circle {
-    width: 30px; height: 30px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-subtle);
-    display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-tertiary);
-    font-weight: 700; transition: all 0.4s ease;
+    width: 24px; height: 24px; border-radius: 50%; background: #0F172A; border: 1px solid #334155;
+    display: flex; align-items: center; justify-content: center; font-size: 10px; color: #64748B;
+    font-weight: 700; transition: all 0.3s ease;
 }
-.node-title { font-size: 11px; font-weight: 600; color: var(--text-secondary); line-height: 1.3; }
+.node-title { font-size: 10px; font-weight: 500; color: #94A3B8; line-height: 1.2; }
 
-/* Pipeline Animation States */
-.node.completed .node-circle { background: var(--tech-blue); border-color: var(--tech-blue); color: #FFF; }
-.node.completed .node-title { color: var(--text-primary); }
+.node.completed .node-circle { background: #38BDF8; border-color: #38BDF8; color: #0F172A; }
+.node.completed .node-title { color: #E2E8F0; }
 
 .node.active .node-circle {
-    background: var(--bg-panel); border-color: var(--cyan-accent); color: var(--cyan-accent);
-    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15); animation: node-pulse 1.5s infinite;
+    background: #0F172A; border-color: #38BDF8; color: #38BDF8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15); animation: node-pulse 1.5s infinite;
 }
-.node.active .node-title { color: var(--cyan-accent); }
-@keyframes node-pulse { 0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.3); } 70% { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); } 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); } }
+.node.active .node-title { color: #38BDF8; }
+@keyframes node-pulse { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.3); } 70% { box-shadow: 0 0 0 6px rgba(56, 189, 248, 0); } 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } }
 
-.scan-line {
-    position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--cyan-accent);
-    box-shadow: 0 0 10px var(--cyan-accent); z-index: 2; opacity: 0;
-}
-.scanning .scan-line { animation: scan-move 1.5s ease-in-out infinite; opacity: 1; }
-@keyframes scan-move { 0% { left: 5%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 95%; opacity: 0; } }
-
-/* INTEGRATED ACTIVITY LOG */
+/* Integrated Activity Log inside Dark Console */
 .activity-log {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary);
-    background: var(--bg-panel-alt); border: 1px solid var(--border-subtle); border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;
+    background: #0B1121; border: 1px solid #1E293B; border-radius: 4px;
     padding: 12px 16px; margin-bottom: 24px; line-height: 1.6;
 }
 .log-row { display: flex; gap: 12px; opacity: 0; animation: fade-in 0.3s ease forwards; }
-.log-time { color: var(--text-tertiary); }
-.log-msg { color: var(--text-primary); }
+.log-time { color: #475569; }
+.log-msg { color: #E2E8F0; }
 @keyframes fade-in { to { opacity: 1; } }
 
-/* UI Overrides */
-div[data-baseweb="select"] > div { background-color: var(--bg-panel-alt) !important; border: 1px solid var(--border-subtle) !important; }
-span[data-baseweb="tag"] {
-    background-color: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important;
-    border-radius: 4px !important; font-family: 'JetBrains Mono', monospace !important; font-size: 11px !important;
-}
+/* Form Controls */
 div[data-testid="stButton"] > button {
-    border-radius: 6px !important; font-weight: 600 !important; font-size: 13px !important;
-    border: 1px solid var(--border-focus) !important; background: var(--bg-panel) !important;
-    color: var(--text-primary) !important; padding: 12px 24px !important; transition: all 0.2s !important;
+    border-radius: 6px !important; font-weight: 500 !important; font-size: 13px !important;
+    border: 1px solid var(--border-focus) !important; background: var(--bg-surface) !important;
+    color: var(--text-primary) !important; padding: 8px 16px !important; transition: all 0.2s !important;
 }
-div[data-testid="stButton"] > button[kind="primary"] { background: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important; }
+div[data-testid="stButton"] > button[kind="primary"] {
+    background: var(--tech-blue) !important; color: #FFFFFF !important; border: none !important;
+}
 div[data-testid="stButton"] > button[kind="primary"]:hover { background: #1D4ED8 !important; }
+div[data-baseweb="select"] > div { background-color: var(--bg-surface-alt) !important; border: 1px solid var(--border-subtle) !important; }
+
 hr { border-color: var(--border-subtle); margin: 2rem 0; }
 </style>
 """, unsafe_allow_html=True)
@@ -318,7 +301,7 @@ st.markdown("""
 # =====================================================================
 if selected_page == "Single App Analysis":
     
-    col_config, col_analysis = st.columns([1, 1.6], gap="large")
+    col_config, col_analysis = st.columns([1, 1.4], gap="large")
 
     with col_config:
         st.markdown('<div class="kicker">Target Application</div>', unsafe_allow_html=True)
@@ -344,22 +327,24 @@ if selected_page == "Single App Analysis":
         execute_btn = st.button("Initialize Analysis", type="primary", use_container_width=True)
 
     with col_analysis:
+        # Wrap output in a dark developer console to create a premium contrast
+        st.markdown('<div class="dev-console">', unsafe_allow_html=True)
+        
         hero_ph = st.empty()
         pipeline_ph = st.empty()
         log_ph = st.empty()
         chart_ph = st.empty()
 
-        def render_pipeline(active_idx, is_scanning=False):
-            scan_class = "scanning" if is_scanning else ""
+        def render_pipeline(active_idx):
             nodes = [
-                ("1", "Manifest Input"),
-                ("2", "Feature Extraction"),
-                ("3", "Vector Engine"),
-                ("4", "ML Processing"),
-                ("5", "Threat Classification"),
-                ("✓", "Diagnostic")
+                ("1", "Input"),
+                ("2", "Extract"),
+                ("3", "Vectors"),
+                ("4", "ML Engine"),
+                ("5", "Evaluate"),
+                ("✓", "Result")
             ]
-            html = f'<div class="pipeline-wrapper {scan_class}"><div class="scan-line"></div><div class="pipeline-track"></div><div class="pipeline-nodes">'
+            html = f'<div class="pipeline-wrapper"><div class="pipeline-track"></div><div class="pipeline-nodes">'
             for i, (icon, lbl) in enumerate(nodes):
                 state = "completed" if i < active_idx else ("active" if i == active_idx else "")
                 html += f'<div class="node {state}"><div class="node-circle">{icon}</div><div class="node-title">{lbl}</div></div>'
@@ -378,22 +363,22 @@ if selected_page == "Single App Analysis":
             hero_ph.empty()
             chart_ph.empty()
 
-            render_pipeline(0, True)
+            render_pipeline(0)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Target manifest loaded into sandbox."))
             render_logs(logs)
             time.sleep(0.3)
 
-            render_pipeline(1, True)
+            render_pipeline(1)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], f"Extracted {len(features)} total features from binary."))
             render_logs(logs)
             time.sleep(0.3)
 
-            render_pipeline(2, True)
+            render_pipeline(2)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], f"Generated matrix. {len(user_payload)} active permission vectors identified."))
             render_logs(logs)
             time.sleep(0.4)
 
-            render_pipeline(3, True)
+            render_pipeline(3)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Model inference started (Random Forest Ensemble)."))
             render_logs(logs)
             time.sleep(0.5)
@@ -402,19 +387,19 @@ if selected_page == "Single App Analysis":
             pred = model.predict(df_target)[0]
             prob = model.predict_proba(df_target)[0][1]
 
-            render_pipeline(4, True)
+            render_pipeline(4)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Threat patterns evaluated against TUANDROMD signatures."))
             render_logs(logs)
             time.sleep(0.4)
 
-            render_pipeline(5, False)
+            render_pipeline(5)
             logs.append((datetime.now().strftime("%H:%M:%S.%f")[:-4], "Diagnostic generated successfully."))
             render_logs(logs)
             
             st.session_state["last_res"] = {"pred": pred, "prob": prob, "payload": user_payload, "logs": logs}
 
         if "last_res" in st.session_state and not execute_btn:
-            render_pipeline(5, False)
+            render_pipeline(5)
             render_logs(st.session_state["last_res"]["logs"])
             
         if "last_res" in st.session_state:
@@ -428,7 +413,7 @@ if selected_page == "Single App Analysis":
                         <div>
                             <div class="diag-header">SECURITY ASSESSMENT</div>
                             <h3 class="diag-title">CRITICAL RISK DETECTED</h3>
-                            <p class="diag-desc">The application profile strongly correlates with known background interception, SMS trojans, and privilege escalation malware.</p>
+                            <p class="diag-desc">The application profile correlates with known background interception, SMS trojans, and privilege escalation malware.</p>
                         </div>
                         <div class="diag-score-block">
                             <div class="diag-score">{prob*100:.1f}%</div>
@@ -442,7 +427,7 @@ if selected_page == "Single App Analysis":
                         <div>
                             <div class="diag-header">SECURITY ASSESSMENT</div>
                             <h3 class="diag-title">LOW RISK VERIFIED</h3>
-                            <p class="diag-desc">The requested capabilities align with standard, benign utility parameters. No anomalous signatures detected in the profile.</p>
+                            <p class="diag-desc">Requested capabilities align with standard, benign utility parameters. No anomalous signatures detected.</p>
                         </div>
                         <div class="diag-score-block">
                             <div class="diag-score">{(1-prob)*100:.1f}%</div>
@@ -452,34 +437,35 @@ if selected_page == "Single App Analysis":
                     """, unsafe_allow_html=True)
 
             with chart_ph.container():
-                st.markdown('<div class="kicker" style="margin-top: 16px;">SUPPORTING EVIDENCE</div>', unsafe_allow_html=True)
-                st.markdown('<h2 class="section-title" style="font-size:14px;">Predictive Feature Contributions</h2>', unsafe_allow_html=True)
+                st.markdown('<div class="kicker" style="margin-top: 16px; color: #38BDF8;">EVIDENCE</div>', unsafe_allow_html=True)
+                st.markdown('<h2 class="section-title" style="font-size:13px; color: #F8FAFC;">Predictive Feature Contributions</h2>', unsafe_allow_html=True)
                 
                 all_importances = pd.Series(model.feature_importances_, index=features)
-                target_factors = all_importances[all_importances.index.isin(payload)].sort_values(ascending=False).head(5)
+                target_factors = all_importances[all_importances.index.isin(payload)].sort_values(ascending=False).head(4)
 
                 if not target_factors.empty:
                     df_chart = pd.DataFrame({"Vector": target_factors.index, "Weight": target_factors.values})
-                    
                     chart = alt.Chart(df_chart).mark_bar(
-                        color="#EF4444" if pred == 1 else "#3B82F6", height=20, cornerRadiusEnd=2
+                        color="#F87171" if pred == 1 else "#38BDF8", height=16, cornerRadiusEnd=2
                     ).encode(
                         x=alt.X("Weight:Q", axis=None),
-                        y=alt.Y("Vector:N", sort="-x", title=None, axis=alt.Axis(labelColor="#64748B", labelFont="JetBrains Mono", labelFontSize=11, tickColor="transparent", domainColor="transparent")),
+                        y=alt.Y("Vector:N", sort="-x", title=None, axis=alt.Axis(labelColor="#94A3B8", labelFont="JetBrains Mono", labelFontSize=10, tickColor="transparent", domainColor="transparent")),
                         tooltip=["Vector", "Weight"]
-                    ).properties(height=200).configure_view(strokeOpacity=0)
+                    ).properties(height=160).configure_view(strokeOpacity=0)
                     st.altair_chart(chart, use_container_width=True)
                 else:
-                    st.markdown("<p style='font-size: 13px; color: var(--text-tertiary);'>No high-severity vectors present in the current payload.</p>", unsafe_allow_html=True)
+                    st.markdown("<p style='font-size: 13px; color: #64748B;'>No high-severity vectors present in payload.</p>", unsafe_allow_html=True)
 
         elif not execute_btn:
             hero_ph.markdown("""
-            <div style="border: 1px dashed var(--border-focus); border-radius: 8px; padding: 48px 24px; text-align: center; background-color: var(--bg-panel-alt);">
-                <div style="font-size: 24px; color: var(--text-tertiary); margin-bottom: 12px;">⌖</div>
-                <div style="font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); margin-bottom: 4px; letter-spacing: 1px;">AWAITING APPLICATION PROFILE</div>
-                <p style="font-size: 13px; color: var(--text-tertiary); margin: 0;">Configure target features on the left and initialize analysis.</p>
+            <div class="dev-console-empty">
+                <div class="dev-console-icon">⌖</div>
+                <div class="dev-console-title">SYSTEM STANDBY</div>
+                <div class="dev-console-desc">Awaiting manifest injection. Configure vectors on the left to initiate security scan.</div>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
 # =====================================================================
@@ -510,7 +496,7 @@ elif selected_page == "Batch Analysis":
             flagged_threats = int(preds.sum())
 
         st.markdown(f"""
-        <div style="display:flex; gap:48px; background:var(--bg-panel); padding:24px; border:1px solid var(--border-subtle); border-radius:8px; margin-bottom:24px; box-shadow: var(--shadow-soft);">
+        <div style="display:flex; gap:48px; background:var(--bg-surface); padding:24px; border:1px solid var(--border-subtle); border-radius:8px; margin-bottom:24px; box-shadow: var(--shadow-soft);">
             <div class="overview-metric">
                 <div class="om-val">{total_apps}</div><div class="om-lbl">Total Scanned</div>
             </div>
