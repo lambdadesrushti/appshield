@@ -1,0 +1,13 @@
+services:
+  # Trains the model into ./model (runs once, then exits).
+  trainer:
+    build: .
+    command: python train_model.py
+    volumes: ["./data:/app/data", "./model:/app/model"]
+  # Serves the APPSHIELD web app (API + UI).
+  appshield:
+    build: .
+    ports: ["8501:8501"]
+    volumes: ["./model:/app/model", "./data:/app/data"]
+    depends_on:
+      trainer: {condition: service_completed_successfully}
