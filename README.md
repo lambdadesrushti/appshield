@@ -135,3 +135,16 @@ Citation: Borah, P., Bhattacharyya, D.K., Kalita, J. (2020).
 
 The code is released under the MIT Licence (see `LICENSE`). The dataset is
 licensed separately by its authors under CC BY 4.0.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[data/TUANDROMD.csv] --> B[trainer container<br/>train_model.py]
+    B --> C[model/model.pkl]
+    C --> D[appshield container<br/>FastAPI + web UI]
+    D --> E[Browser<br/>localhost:8501]
+```
+
+Docker Compose runs two services. The `trainer` service trains the model and exits.
+The `appshield` service starts after it finishes, loads the model, and serves the API and the interface.
