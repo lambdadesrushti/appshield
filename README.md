@@ -148,3 +148,24 @@ flowchart LR
 
 Docker Compose runs two services. The `trainer` service trains the model and exits.
 The `appshield` service starts after it finishes, loads the model, and serves the API and the interface.
+
+## Screenshots
+
+![Single app analysis: High risk result](docs/high-risk.png)
+![Batch analysis](docs/batch.png)
+![Model insights](docs/insights.png)
+
+## Reproducibility
+
+The project was verified from a fresh clone in an empty folder (Windows 11, Docker Desktop):
+git clone, then docker compose up --build. The trainer container retrained the model
+(test accuracy 0.9978), the appshield container started, and the app opened at
+http://localhost:8501 with the engine online.
+
+![Docker Compose run from a fresh clone](docs/docker-run.png)
+
+## CA3 feedback and changes
+
+| Feedback at the first review | What was changed |
+|---|---|
+| Make the interface better | Replaced the Streamlit dashboard with a FastAPI backend and a custom web interface. The security result is now the main element of the page, followed by a four-stage analysis pipeline (Profile, Vector, Random Forest, Diagnostic) and the contributing indicators. Added a consistent blue colour scheme with light and dark modes, a responsive layout for tablets and phones, and an interactive batch table with risk filters, sorting and a CSV template. |
